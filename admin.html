@@ -60,17 +60,30 @@
     </div>
 
     <script>
-        const ADMIN_PW = "waylib2026";
+        // --- 🔒 보안: 비밀번호 암호화(난독화) 처리 ---
+        // 'waylib2026'이라는 글자를 코드에 직접 노출하지 않고,
+        // 각 글자의 아스키코드에 +5를 한 숫자 배열로 숨겨둠
+        const secretCodes = [124, 102, 126, 113, 110, 103, 55, 53, 55, 59];
+        
         const userInput = prompt("관리자 비밀번호를 입력하세요.");
 
-        if (userInput === ADMIN_PW) {
-            document.body.style.display = "block";
+        // 입력받은 비밀번호를 똑같이 변환해서 숫자가 일치하는지 검사
+        let isMatch = false;
+        if (userInput && userInput.length === secretCodes.length) {
+            isMatch = userInput.split('').every((char, index) => {
+                return char.charCodeAt(0) + 5 === secretCodes[index];
+            });
+        }
+
+        if (isMatch) {
+            document.body.style.display = "block"; // 비번 일치 시 화면 표시
             renderData();
         } else {
             alert("접근 권한이 없습니다.");
-            window.location.href = "index.html"; 
+            window.location.href = "index.html"; // 강제 쫓아내기
         }
 
+        // --- 📊 데이터 렌더링 ---
         function renderData() {
             const tbody = document.getElementById('resultBody');
             const surveys = JSON.parse(localStorage.getItem('waylib_surveys')) || [];
@@ -107,6 +120,7 @@
             `).join('');
         }
 
+        // --- 🗑️ 데이터 초기화 ---
         function clearData() {
             if(confirm("정말 모든 설문 데이터를 삭제하시겠습니까? (복구 불가)")) {
                 localStorage.removeItem('waylib_surveys');
