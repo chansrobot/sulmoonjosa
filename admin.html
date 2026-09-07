@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청춘비서 | 관리자 대시보드</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #f1f5f9; padding: 40px; display: none; /* 기본 숨김 처리 */ }
+        .admin-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        h1 { color: #1e293b; }
+        .btn-clear { padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #0f172a; color: white; font-weight: 600; }
+        tr:hover { background: #f8fafc; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-header">
+        <h1>📊 설문 결과 관리자 패널</h1>
+        <button class="btn-clear" onclick="clearData()">데이터 전체 초기화</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>제출 시간</th>
+                <th>나이</th>
+                <th>희망 지역</th>
+                <th>독립 시기</th>
+                <th>희망 형태</th>
+                <th>보증금/월세</th>
+                <th>월 소득</th>
+            </tr>
+        </thead>
+        <tbody id="resultBody">
+            <!-- 데이터가 여기에 렌더링됨 -->
+        </tbody>
+    </table>
+
+    <script>
+        // --- 🔒 보안: 비밀번호 체크 ---
+        const ADMIN_PW = "waylib2026"; // 비밀번호 설정
+        const userInput = prompt("관리자 비밀번호를 입력하세요.");
+
+        if (userInput === ADMIN_PW) {
+            document.body.style.display = "block"; // 비번 일치 시 화면 표시
+            renderData();
+        } else {
+            alert("접근 권한이 없습니다.");
+            window.location.href = "index.html"; // 강제 쫓아내기
+        }
+
+        // --- 📊 데이터 렌더링 ---
+        function renderData() {
+            const tbody = document.getElementById('resultBody');
+            const surveys = JSON.parse(localStorage.getItem('waylib_surveys')) || [];
+            
+            if (surveys.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">제출된 데이터가 없습니다.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = surveys.map(s => `
+                <tr>
+                    <td>${s.timestamp || '-'}</td>
+                    <td>만 ${s.age || '-'}세</td>
+                    <td>${s.region_city || ''} ${s.region_gu || ''}</td>
+                    <td>${s.timeline || '-'}</td>
+                    <td>${s.house_type || '-'}</td>
+                    <td>${s.budget_deposit || '0'}만 / ${s.budget_rent || '0'}만</td>
+                    <td>${s.income || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+        // --- 🗑️ 데이터 초기화 ---
+        function clearData() {
+            if(confirm("정말 모든 설문 데이터를 삭제하시겠습니까? (복구 불가)")) {
+                localStorage.removeItem('waylib_surveys');
+                renderData();
+            }
+        }
+    </script>
+</body>
+</html>
