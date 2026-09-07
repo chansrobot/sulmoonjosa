@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자립 자가진단 | 청춘비서</title>
+    <title>자립 자가진단 설문조사 | 청춘비서</title>
     <style>
         :root {
             --navy: #071c39; --blue: #2875d6; --blue-light: #eaf4ff;
@@ -14,9 +14,8 @@
         body { background: #f4f8fe; color: var(--text); padding: 50px 20px; }
         
         .form-container {
-            max-width: 700px; margin: 0 auto;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
+            max-width: 750px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 24px; padding: 50px;
             box-shadow: 0 15px 40px rgba(7, 28, 57, 0.08);
             border: 1px solid rgba(255, 255, 255, 1);
@@ -24,16 +23,16 @@
 
         .header { text-align: center; margin-bottom: 40px; }
         .header h1 { font-size: 32px; color: var(--navy); letter-spacing: -0.05em; }
-        .header p { color: var(--text-light); margin-top: 10px; }
+        .header p { color: var(--text-light); margin-top: 10px; line-height: 1.6; }
 
         .step-title {
-            font-size: 18px; color: var(--blue); font-weight: 800;
-            margin: 40px 0 20px; padding-bottom: 10px;
+            font-size: 20px; color: var(--blue); font-weight: 800;
+            margin: 50px 0 25px; padding-bottom: 15px;
             border-bottom: 2px solid var(--blue-light);
         }
 
         .q-box { margin-bottom: 35px; }
-        .q-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: var(--navy); }
+        .q-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: var(--navy); line-height: 1.4; }
         
         input[type="text"], input[type="number"] {
             width: 100%; padding: 15px; border-radius: 12px;
@@ -47,7 +46,7 @@
             flex: 1 1 calc(50% - 10px);
             padding: 15px; border: 1px solid var(--border); border-radius: 12px;
             text-align: center; cursor: pointer; transition: 0.2s; font-size: 14px;
-            background: var(--white); font-weight: 500;
+            background: var(--white); font-weight: 500; word-break: keep-all;
         }
         .radio-group input[type="radio"], .radio-group input[type="checkbox"] { display: none; }
         .radio-group input:checked + .radio-label {
@@ -55,7 +54,7 @@
         }
 
         .submit-btn {
-            width: 100%; padding: 20px; margin-top: 20px;
+            width: 100%; padding: 20px; margin-top: 40px;
             background: linear-gradient(135deg, #2875d6, #104b91);
             color: white; border: none; border-radius: 16px;
             font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.3s;
@@ -68,7 +67,7 @@
 <div class="form-container">
     <div class="header">
         <h1>청춘비서 자립 자가진단</h1>
-        <p>정확한 로드맵 설계를 위해 현재 상황을 알려주세요.</p>
+        <p>자립준비청년 및 독립을 준비하는 청년들을 위한 설문조사입니다.<br>여러분의 소중한 의견은 서비스 개선에 활용됩니다.</p>
     </div>
 
     <form id="diagnosisForm">
@@ -77,56 +76,250 @@
         
         <div class="q-box">
             <div class="q-title">Q1. 현재 나이를 입력해주세요.</div>
-            <input type="number" name="age" placeholder="만 나이 입력 (예: 22)" required>
+            <input type="number" name="q1_age" placeholder="만 ___세" required>
         </div>
 
         <div class="q-box">
-            <div class="q-title">Q2. 독립을 희망하는 지역은 어디인가요?</div>
-            <input type="text" name="region_city" placeholder="시·도 (예: 서울특별시)" required>
-            <input type="text" name="region_gu" placeholder="시·군·구 (예: 서초구)" required>
+            <div class="q-title">Q2. 독립을 희망하는 지역을 입력해주세요.</div>
+            <input type="text" name="q2_city" placeholder="시·도 (예: 서울특별시)">
+            <input type="text" name="q2_gu" placeholder="시·군·구 (예: 서초구)">
+            <input type="text" name="q2_dong" placeholder="읍·면·동 (예: 서초3동)">
+            <div class="radio-group" style="margin-top: 10px;">
+                <input type="checkbox" id="q2_none" name="q2_undecided" value="아직 정하지 못함">
+                <label class="radio-label" for="q2_none" style="flex: 1 1 100%;">아직 정하지 못함</label>
+            </div>
         </div>
 
         <div class="q-box">
             <div class="q-title">Q3. 언제까지 독립하고 싶나요?</div>
             <div class="radio-group">
-                <input type="radio" id="t1" name="timeline" value="1개월 이내"><label class="radio-label" for="t1">1개월 이내</label>
-                <input type="radio" id="t2" name="timeline" value="3개월 이내"><label class="radio-label" for="t2">3개월 이내</label>
-                <input type="radio" id="t3" name="timeline" value="6개월 이내"><label class="radio-label" for="t3">6개월 이내</label>
-                <input type="radio" id="t4" name="timeline" value="미정"><label class="radio-label" for="t4">아직 정하지 못함</label>
+                <input type="radio" id="q3_1" name="q3_timeline" value="1개월 이내"><label class="radio-label" for="q3_1">1개월 이내</label>
+                <input type="radio" id="q3_2" name="q3_timeline" value="3개월 이내"><label class="radio-label" for="q3_2">3개월 이내</label>
+                <input type="radio" id="q3_3" name="q3_timeline" value="6개월 이내"><label class="radio-label" for="q3_3">6개월 이내</label>
+                <input type="radio" id="q3_4" name="q3_timeline" value="1년 이내"><label class="radio-label" for="q3_4">1년 이내</label>
+                <input type="radio" id="q3_5" name="q3_timeline" value="아직 정하지 못함"><label class="radio-label" for="q3_5" style="flex: 1 1 100%;">아직 정하지 못함</label>
             </div>
         </div>
 
         <!-- 2단계 -->
         <div class="step-title">2단계. 희망 주거 조건</div>
+        
         <div class="q-box">
-            <div class="q-title">Q4. 희망하는 주거 형태는 무엇인가요? (복수 선택)</div>
+            <div class="q-title">Q4. 누구와 함께 거주할 예정인가요?</div>
             <div class="radio-group">
-                <input type="checkbox" id="h1" name="house_type" value="월세"><label class="radio-label" for="h1">월세</label>
-                <input type="checkbox" id="h2" name="house_type" value="전세"><label class="radio-label" for="h2">전세</label>
-                <input type="checkbox" id="h3" name="house_type" value="공공임대"><label class="radio-label" for="h3">공공임대/행복주택</label>
-                <input type="checkbox" id="h4" name="house_type" value="기숙사"><label class="radio-label" for="h4">기숙사/고시원</label>
+                <input type="radio" id="q4_1" name="q4_companion" value="혼자"><label class="radio-label" for="q4_1">혼자</label>
+                <input type="radio" id="q4_2" name="q4_companion" value="가족"><label class="radio-label" for="q4_2">가족</label>
+                <input type="radio" id="q4_3" name="q4_companion" value="친구·지인"><label class="radio-label" for="q4_3">친구·지인</label>
+                <input type="radio" id="q4_4" name="q4_companion" value="연인·배우자"><label class="radio-label" for="q4_4">연인·배우자</label>
+                <input type="radio" id="q4_5" name="q4_companion" value="아직 정하지 못함"><label class="radio-label" for="q4_5">아직 정하지 못함</label>
+            </div>
+            <input type="text" name="q4_other" placeholder="기타 (직접 입력)" style="margin-top: 10px;">
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q5. 희망하는 주거 형태는 무엇인가요? (복수 선택 가능)</div>
+            <div class="radio-group">
+                <input type="checkbox" id="q5_1" name="q5_house_type" value="월세"><label class="radio-label" for="q5_1">월세</label>
+                <input type="checkbox" id="q5_2" name="q5_house_type" value="전세"><label class="radio-label" for="q5_2">전세</label>
+                <input type="checkbox" id="q5_3" name="q5_house_type" value="공공임대주택"><label class="radio-label" for="q5_3">공공임대주택</label>
+                <input type="checkbox" id="q5_4" name="q5_house_type" value="행복주택·청년주택"><label class="radio-label" for="q5_4">행복주택·청년주택</label>
+                <input type="checkbox" id="q5_5" name="q5_house_type" value="쉐어하우스"><label class="radio-label" for="q5_5">쉐어하우스</label>
+                <input type="checkbox" id="q5_6" name="q5_house_type" value="고시원"><label class="radio-label" for="q5_6">고시원</label>
+                <input type="checkbox" id="q5_7" name="q5_house_type" value="기숙사"><label class="radio-label" for="q5_7">기숙사</label>
+                <input type="checkbox" id="q5_8" name="q5_house_type" value="아직 정하지 못함"><label class="radio-label" for="q5_8">아직 정하지 못함</label>
+            </div>
+            <input type="text" name="q5_other" placeholder="기타 (직접 입력)" style="margin-top: 10px;">
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q6. 주거에 사용할 수 있는 예산을 입력해주세요.</div>
+            <input type="number" name="q6_deposit" placeholder="보증금: 약 ___만 원">
+            <input type="number" name="q6_rent" placeholder="월세: 최대 ___만 원">
+            <input type="number" name="q6_fee" placeholder="월 관리비: 최대 ___만 원">
+            <div class="radio-group" style="margin-top: 10px;">
+                <input type="checkbox" id="q6_none" name="q6_no_budget" value="아직 예산을 정하지 못함">
+                <label class="radio-label" for="q6_none" style="flex: 1 1 100%;">아직 예산을 정하지 못함</label>
+            </div>
+        </div>
+
+        <!-- 3단계 -->
+        <div class="step-title">3단계. 현재 준비 상태</div>
+        
+        <div class="q-box">
+            <div class="q-title">Q7. 현재 독립 준비 단계는 어디에 해당하나요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q7_1" name="q7_stage" value="독립을 처음 고민하는 단계"><label class="radio-label" for="q7_1" style="flex: 1 1 100%;">독립을 처음 고민하는 단계</label>
+                <input type="radio" id="q7_2" name="q7_stage" value="희망 지역과 주거 형태를 알아보는 단계"><label class="radio-label" for="q7_2" style="flex: 1 1 100%;">희망 지역과 주거 형태를 알아보는 단계</label>
+                <input type="radio" id="q7_3" name="q7_stage" value="예산과 자금계획을 세우는 단계"><label class="radio-label" for="q7_3" style="flex: 1 1 100%;">예산과 자금계획을 세우는 단계</label>
+                <input type="radio" id="q7_4" name="q7_stage" value="매물이나 공공주택을 알아보는 단계"><label class="radio-label" for="q7_4" style="flex: 1 1 100%;">매물이나 공공주택을 알아보는 단계</label>
+                <input type="radio" id="q7_5" name="q7_stage" value="대출과 지원정책을 알아보는 단계"><label class="radio-label" for="q7_5" style="flex: 1 1 100%;">대출과 지원정책을 알아보는 단계</label>
+                <input type="radio" id="q7_6" name="q7_stage" value="계약할 주거지를 결정한 단계"><label class="radio-label" for="q7_6" style="flex: 1 1 100%;">계약할 주거지를 결정한 단계</label>
+                <input type="radio" id="q7_7" name="q7_stage" value="계약 및 이사를 준비하는 단계"><label class="radio-label" for="q7_7" style="flex: 1 1 100%;">계약 및 이사를 준비하는 단계</label>
+                <input type="radio" id="q7_8" name="q7_stage" value="이미 독립하여 생활하는 단계"><label class="radio-label" for="q7_8" style="flex: 1 1 100%;">이미 독립하여 생활하는 단계</label>
             </div>
         </div>
 
         <div class="q-box">
-            <div class="q-title">Q5. 주거에 사용할 수 있는 예산을 입력해주세요.</div>
-            <input type="number" name="budget_deposit" placeholder="보증금 (만 원 단위)">
-            <input type="number" name="budget_rent" placeholder="월세 최대 (만 원 단위)">
+            <div class="q-title">Q8. 현재 거주 형태는 무엇인가요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q8_1" name="q8_current_house" value="부모님·보호자와 거주"><label class="radio-label" for="q8_1">부모님·보호자와 거주</label>
+                <input type="radio" id="q8_2" name="q8_current_house" value="기숙사"><label class="radio-label" for="q8_2">기숙사</label>
+                <input type="radio" id="q8_3" name="q8_current_house" value="월세"><label class="radio-label" for="q8_3">월세</label>
+                <input type="radio" id="q8_4" name="q8_current_house" value="전세"><label class="radio-label" for="q8_4">전세</label>
+                <input type="radio" id="q8_5" name="q8_current_house" value="공공임대주택"><label class="radio-label" for="q8_5">공공임대주택</label>
+                <input type="radio" id="q8_6" name="q8_current_house" value="쉐어하우스·고시원"><label class="radio-label" for="q8_6">쉐어하우스·고시원</label>
+                <input type="radio" id="q8_7" name="q8_current_house" value="자가"><label class="radio-label" for="q8_7">자가</label>
+            </div>
+            <input type="text" name="q8_other" placeholder="기타 (직접 입력)" style="margin-top: 10px;">
         </div>
 
-        <!-- 4단계 (핵심 위주 축약) -->
-        <div class="step-title">3단계. 소득 및 자금 상황</div>
         <div class="q-box">
-            <div class="q-title">Q6. 월평균 세전소득은 얼마인가요?</div>
+            <div class="q-title">Q9. 현재 무주택자인가요?</div>
             <div class="radio-group">
-                <input type="radio" id="i1" name="income" value="소득 없음"><label class="radio-label" for="i1">소득 없음</label>
-                <input type="radio" id="i2" name="income" value="100-200"><label class="radio-label" for="i2">100~200만 원</label>
-                <input type="radio" id="i3" name="income" value="200-300"><label class="radio-label" for="i3">200~300만 원</label>
-                <input type="radio" id="i4" name="income" value="300이상"><label class="radio-label" for="i4">300만 원 이상</label>
+                <input type="radio" id="q9_1" name="q9_homeless" value="예"><label class="radio-label" for="q9_1">예</label>
+                <input type="radio" id="q9_2" name="q9_homeless" value="아니요"><label class="radio-label" for="q9_2">아니요</label>
+                <input type="radio" id="q9_3" name="q9_homeless" value="잘 모르겠음"><label class="radio-label" for="q9_3" style="flex: 1 1 100%;">잘 모르겠음</label>
             </div>
         </div>
 
-        <button type="submit" class="submit-btn">결과 분석하고 로드맵 생성하기 →</button>
+        <!-- 4단계 -->
+        <div class="step-title">4단계. 소득 및 자금 상황</div>
+        
+        <div class="q-box">
+            <div class="q-title">Q10. 현재 경제활동 상태를 선택해주세요.</div>
+            <div class="radio-group">
+                <input type="radio" id="q10_1" name="q10_job" value="대학생·대학원생"><label class="radio-label" for="q10_1">대학생·대학원생</label>
+                <input type="radio" id="q10_2" name="q10_job" value="취업준비생"><label class="radio-label" for="q10_2">취업준비생</label>
+                <input type="radio" id="q10_3" name="q10_job" value="직장인"><label class="radio-label" for="q10_3">직장인</label>
+                <input type="radio" id="q10_4" name="q10_job" value="아르바이트·단기근로자"><label class="radio-label" for="q10_4">아르바이트·단기근로자</label>
+                <input type="radio" id="q10_5" name="q10_job" value="프리랜서·자영업자"><label class="radio-label" for="q10_5">프리랜서·자영업자</label>
+                <input type="radio" id="q10_6" name="q10_job" value="현재 소득활동 없음"><label class="radio-label" for="q10_6">현재 소득활동 없음</label>
+            </div>
+            <input type="text" name="q10_other" placeholder="기타 (직접 입력)" style="margin-top: 10px;">
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q11. 월평균 세전소득은 얼마인가요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q11_1" name="q11_income" value="소득 없음"><label class="radio-label" for="q11_1">소득 없음</label>
+                <input type="radio" id="q11_2" name="q11_income" value="100만 원 미만"><label class="radio-label" for="q11_2">100만 원 미만</label>
+                <input type="radio" id="q11_3" name="q11_income" value="100~200만 원 미만"><label class="radio-label" for="q11_3">100~200만 원 미만</label>
+                <input type="radio" id="q11_4" name="q11_income" value="200~300만 원 미만"><label class="radio-label" for="q11_4">200~300만 원 미만</label>
+                <input type="radio" id="q11_5" name="q11_income" value="300~400만 원 미만"><label class="radio-label" for="q11_5">300~400만 원 미만</label>
+                <input type="radio" id="q11_6" name="q11_income" value="400만 원 이상"><label class="radio-label" for="q11_6">400만 원 이상</label>
+                <input type="radio" id="q11_7" name="q11_income" value="정확히 알지 못함"><label class="radio-label" for="q11_7" style="flex: 1 1 100%;">정확히 알지 못함</label>
+            </div>
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q12. 독립에 바로 사용할 수 있는 자금은 얼마인가요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q12_1" name="q12_cash" value="500만 원 미만"><label class="radio-label" for="q12_1">500만 원 미만</label>
+                <input type="radio" id="q12_2" name="q12_cash" value="500~1,000만 원 미만"><label class="radio-label" for="q12_2">500~1,000만 원 미만</label>
+                <input type="radio" id="q12_3" name="q12_cash" value="1,000~3,000만 원 미만"><label class="radio-label" for="q12_3">1,000~3,000만 원 미만</label>
+                <input type="radio" id="q12_4" name="q12_cash" value="3,000~5,000만 원 미만"><label class="radio-label" for="q12_4">3,000~5,000만 원 미만</label>
+                <input type="radio" id="q12_5" name="q12_cash" value="5,000만 원 이상"><label class="radio-label" for="q12_5">5,000만 원 이상</label>
+                <input type="radio" id="q12_6" name="q12_cash" value="사용 가능한 자금 없음"><label class="radio-label" for="q12_6">사용 가능한 자금 없음</label>
+                <input type="radio" id="q12_7" name="q12_cash" value="아직 계산하지 못함"><label class="radio-label" for="q12_7" style="flex: 1 1 100%;">아직 계산하지 못함</label>
+            </div>
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q13. 정부 주거지원 정책 확인을 위한 소득·자산 정보를 알고 있나요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q13_1" name="q13_policy" value="소득과 자산 모두 알고 있음"><label class="radio-label" for="q13_1" style="flex: 1 1 100%;">소득과 자산 모두 알고 있음</label>
+                <input type="radio" id="q13_2" name="q13_policy" value="소득만 알고 있음"><label class="radio-label" for="q13_2">소득만 알고 있음</label>
+                <input type="radio" id="q13_3" name="q13_policy" value="자산만 알고 있음"><label class="radio-label" for="q13_3">자산만 알고 있음</label>
+                <input type="radio" id="q13_4" name="q13_policy" value="모두 정확히 알지 못함"><label class="radio-label" for="q13_4">모두 정확히 알지 못함</label>
+                <input type="radio" id="q13_5" name="q13_policy" value="나중에 입력하겠음"><label class="radio-label" for="q13_5">나중에 입력하겠음</label>
+            </div>
+        </div>
+
+        <!-- 5단계 -->
+        <div class="step-title">5단계. 청약·대출 및 지출</div>
+        
+        <div class="q-box">
+            <div class="q-title">Q14. 주택청약종합저축을 보유하고 있나요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q14_1" name="q14_chungyak" value="있음"><label class="radio-label" for="q14_1">있음</label>
+                <input type="radio" id="q14_2" name="q14_chungyak" value="없음"><label class="radio-label" for="q14_2">없음</label>
+                <input type="radio" id="q14_3" name="q14_chungyak" value="잘 모르겠음"><label class="radio-label" for="q14_3" style="flex: 1 1 100%;">잘 모르겠음</label>
+            </div>
+            <div style="margin-top: 15px;">
+                <p style="font-size: 14px; color: var(--navy); margin-bottom: 5px;">Q14-1. 청약통장이 있다면 납입 정보를 입력해주세요.</p>
+                <input type="number" name="q14_1_count" placeholder="총 납입 횟수: ___회">
+                <input type="number" name="q14_1_amount" placeholder="월 납입금액: ___만 원">
+            </div>
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q15. 현재 보유한 대출이 있나요? (복수 선택 가능)</div>
+            <div class="radio-group">
+                <input type="checkbox" id="q15_1" name="q15_loan_type" value="없음"><label class="radio-label" for="q15_1">없음</label>
+                <input type="checkbox" id="q15_2" name="q15_loan_type" value="학자금대출"><label class="radio-label" for="q15_2">학자금대출</label>
+                <input type="checkbox" id="q15_3" name="q15_loan_type" value="신용대출"><label class="radio-label" for="q15_3">신용대출</label>
+                <input type="checkbox" id="q15_4" name="q15_loan_type" value="전월세대출"><label class="radio-label" for="q15_4">전월세대출</label>
+                <input type="checkbox" id="q15_5" name="q15_loan_type" value="자동차대출"><label class="radio-label" for="q15_5">자동차대출</label>
+                <input type="checkbox" id="q15_6" name="q15_loan_type" value="기타 대출"><label class="radio-label" for="q15_6">기타 대출</label>
+            </div>
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q16. 현재 대출 잔액과 월 상환금액을 입력해주세요.</div>
+            <input type="number" name="q16_loan_total" placeholder="총 대출 잔액: 약 ___만 원">
+            <input type="number" name="q16_loan_month" placeholder="월 상환금액: 약 ___만 원">
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q17. 독립을 위해 주거자금 대출을 이용할 의향이 있나요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q17_1" name="q17_will_loan" value="있음"><label class="radio-label" for="q17_1">있음</label>
+                <input type="radio" id="q17_2" name="q17_will_loan" value="조건이 적합하다면 이용할 의향이 있음"><label class="radio-label" for="q17_2" style="flex: 1 1 100%;">조건이 적합하다면 이용할 의향이 있음</label>
+                <input type="radio" id="q17_3" name="q17_will_loan" value="없음"><label class="radio-label" for="q17_3">없음</label>
+                <input type="radio" id="q17_4" name="q17_will_loan" value="아직 결정하지 못함"><label class="radio-label" for="q17_4" style="flex: 1 1 100%;">아직 결정하지 못함</label>
+            </div>
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q18. 현재 신용점수 구간을 선택해주세요. (선택)</div>
+            <div class="radio-group">
+                <input type="radio" id="q18_1" name="q18_credit" value="900점 이상"><label class="radio-label" for="q18_1">900점 이상</label>
+                <input type="radio" id="q18_2" name="q18_credit" value="800~899점"><label class="radio-label" for="q18_2">800~899점</label>
+                <input type="radio" id="q18_3" name="q18_credit" value="700~799점"><label class="radio-label" for="q18_3">700~799점</label>
+                <input type="radio" id="q18_4" name="q18_credit" value="600~699점"><label class="radio-label" for="q18_4">600~699점</label>
+                <input type="radio" id="q18_5" name="q18_credit" value="600점 미만"><label class="radio-label" for="q18_5">600점 미만</label>
+                <input type="radio" id="q18_6" name="q18_credit" value="정확히 알지 못함"><label class="radio-label" for="q18_6">정확히 알지 못함</label>
+            </div>
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q19. 현재 월 고정지출을 입력해주세요.</div>
+            <input type="number" name="q19_ex1" placeholder="보험료: ___만 원">
+            <input type="number" name="q19_ex2" placeholder="통신비: ___만 원">
+            <input type="number" name="q19_ex3" placeholder="적금·저축: ___만 원">
+            <input type="number" name="q19_ex4" placeholder="대출 원리금·이자: ___만 원">
+            <input type="number" name="q19_ex5" placeholder="현재 주거비: ___만 원">
+            <input type="number" name="q19_ex6" placeholder="교통비·차량 유지비: ___만 원">
+            <input type="number" name="q19_ex7" placeholder="기타 고정지출: ___만 원">
+            <input type="number" name="q19_ex_total" placeholder="월 고정지출 합계: 약 ___만 원" style="background: #eaf4ff; font-weight: bold;">
+        </div>
+
+        <div class="q-box">
+            <div class="q-title">Q20. 로드맵에서 가장 먼저 도움받고 싶은 분야는 무엇인가요?</div>
+            <div class="radio-group">
+                <input type="radio" id="q20_1" name="q20_help" value="독립 예산 설정"><label class="radio-label" for="q20_1" style="flex: 1 1 100%;">독립 예산 설정</label>
+                <input type="radio" id="q20_2" name="q20_help" value="희망 지역 및 주거 형태 결정"><label class="radio-label" for="q20_2" style="flex: 1 1 100%;">희망 지역 및 주거 형태 결정</label>
+                <input type="radio" id="q20_3" name="q20_help" value="전월세 매물 탐색"><label class="radio-label" for="q20_3" style="flex: 1 1 100%;">전월세 매물 탐색</label>
+                <input type="radio" id="q20_4" name="q20_help" value="공공임대주택 탐색"><label class="radio-label" for="q20_4" style="flex: 1 1 100%;">공공임대주택 탐색</label>
+                <input type="radio" id="q20_5" name="q20_help" value="청년 주거지원 정책 추천"><label class="radio-label" for="q20_5" style="flex: 1 1 100%;">청년 주거지원 정책 추천</label>
+                <input type="radio" id="q20_6" name="q20_help" value="전월세대출 비교"><label class="radio-label" for="q20_6" style="flex: 1 1 100%;">전월세대출 비교</label>
+                <input type="radio" id="q20_7" name="q20_help" value="안전한 부동산 계약"><label class="radio-label" for="q20_7" style="flex: 1 1 100%;">안전한 부동산 계약</label>
+                <input type="radio" id="q20_8" name="q20_help" value="이사 및 전입신고 등 행정 절차"><label class="radio-label" for="q20_8" style="flex: 1 1 100%;">이사 및 전입신고 등 행정 절차</label>
+                <input type="radio" id="q20_9" name="q20_help" value="독립 후 생활비 관리"><label class="radio-label" for="q20_9" style="flex: 1 1 100%;">독립 후 생활비 관리</label>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">설문 제출하기</button>
     </form>
 </div>
 
@@ -134,22 +327,22 @@
     document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // 폼 데이터 수집
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
         
-        // 체크박스(복수선택) 처리
-        data.house_type = formData.getAll('house_type').join(', ');
+        // 복수선택 체크박스 텍스트로 합치기
+        data.q5_house_type = formData.getAll('q5_house_type').join(', ');
+        data.q15_loan_type = formData.getAll('q15_loan_type').join(', ');
 
-        // 로컬 스토리지에 저장 (DB 역할)
+        // 로컬 스토리지에 저장
         let surveys = JSON.parse(localStorage.getItem('waylib_surveys')) || [];
         data.timestamp = new Date().toLocaleString();
         surveys.push(data);
         localStorage.setItem('waylib_surveys', JSON.stringify(surveys));
 
-        // 완료 후 대시보드로 이동
-        alert('진단이 완료되었습니다! 맞춤형 로드맵을 생성합니다.');
-        window.location.href = 'dashboard.html';
+        // 👉 외부로 나가지 않고 현재 창에서 알림 후 새로고침
+        alert('설문이 완료되었습니다! 참여해주셔서 감사합니다.');
+        window.location.reload(); 
     });
 </script>
 
