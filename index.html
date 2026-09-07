@@ -9,6 +9,7 @@
             --navy: #071c39; --blue: #2875d6; --blue-light: #eaf4ff;
             --text: #16263b; --text-light: #6b7a8c; --white: #ffffff;
             --border: rgba(10, 50, 100, 0.12);
+            --mint: #10b981;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Pretendard, sans-serif; }
         body { background: #f4f8fe; color: var(--text); padding: 50px 20px; }
@@ -22,8 +23,8 @@
         }
 
         .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { font-size: 32px; color: var(--navy); letter-spacing: -0.05em; }
-        .header p { color: var(--text-light); margin-top: 10px; line-height: 1.6; }
+        .header h1 { font-size: 32px; color: var(--navy); letter-spacing: -0.05em; margin-bottom: 15px; }
+        .header p { color: var(--text-light); line-height: 1.6; }
 
         .step-title {
             font-size: 20px; color: var(--blue); font-weight: 800;
@@ -60,6 +61,28 @@
             font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.3s;
         }
         .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(40, 117, 214, 0.4); }
+
+        /* 제출 완료 화면 CSS */
+        #thankYouMessage {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+        .check-circle {
+            width: 80px; height: 80px; margin: 0 auto 30px;
+            background: var(--mint); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        .check-circle svg { width: 40px; height: 40px; stroke: white; stroke-width: 3; fill: none; }
+        #thankYouMessage h2 { font-size: 28px; color: var(--navy); margin-bottom: 20px; letter-spacing: -0.05em; }
+        #thankYouMessage p { font-size: 16px; color: var(--text-light); line-height: 1.7; word-break: keep-all; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -67,7 +90,18 @@
 <div class="form-container">
     <div class="header">
         <h1>청춘비서 자립 자가진단</h1>
-        <p>자립준비청년 및 독립을 준비하는 청년들을 위한 설문조사입니다.<br>여러분의 소중한 의견은 서비스 개선에 활용됩니다.</p>
+        <p id="headerDesc">자립준비청년 및 독립을 준비하는 청년들을 위한 설문조사입니다.<br>여러분의 소중한 의견은 서비스 개선에 활용됩니다.</p>
+    </div>
+
+    <!-- 제출 완료 시 보여질 감사 화면 -->
+    <div id="thankYouMessage">
+        <div class="check-circle">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+        <h2>설문 참여가 완료되었습니다!</h2>
+        <p>소중한 시간을 내어 의견을 남겨주셔서 진심으로 감사합니다.<br>보내주신 답변은 청춘비서 서비스가 더 나은 방향으로 나아가는 데 아주 큰 도움이 될 거예요.</p>
     </div>
 
     <form id="diagnosisForm">
@@ -324,6 +358,15 @@
 </div>
 
 <script>
+    // 페이지가 열릴 때, 이미 제출한 유저인지 확인
+    document.addEventListener("DOMContentLoaded", () => {
+        if(localStorage.getItem('waylib_survey_done') === 'true') {
+            document.getElementById('diagnosisForm').style.display = 'none';
+            document.getElementById('headerDesc').style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
+        }
+    });
+
     document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -334,15 +377,22 @@
         data.q5_house_type = formData.getAll('q5_house_type').join(', ');
         data.q15_loan_type = formData.getAll('q15_loan_type').join(', ');
 
-        // 로컬 스토리지에 저장
+        // 로컬 스토리지에 데이터 저장
         let surveys = JSON.parse(localStorage.getItem('waylib_surveys')) || [];
         data.timestamp = new Date().toLocaleString();
         surveys.push(data);
         localStorage.setItem('waylib_surveys', JSON.stringify(surveys));
 
-        // 👉 외부로 나가지 않고 현재 창에서 알림 후 새로고침
-        alert('설문이 완료되었습니다! 참여해주셔서 감사합니다.');
-        window.location.reload(); 
+        // 👉 '이 유저는 설문을 완료했음' 도장 찍기
+        localStorage.setItem('waylib_survey_done', 'true');
+
+        // 제출 즉시 폼 숨기고 감사 인사 화면 띄우기
+        document.getElementById('diagnosisForm').style.display = 'none';
+        document.getElementById('headerDesc').style.display = 'none';
+        document.getElementById('thankYouMessage').style.display = 'block';
+        
+        // 화면 맨 위로 스크롤 올려주기
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 </script>
 
