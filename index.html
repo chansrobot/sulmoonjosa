@@ -358,10 +358,8 @@
 </div>
 
 <script>
-    // 👇 네가 발급받은 구글 스크립트 주소 
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw9IE7iCQPIMcnvsmNUDoElPgf2--4B1jJ8yGc35aDUKOPYp1WvOvEmfjVGzLkhOodh/exec';
     
-    // 페이지가 열릴 때, 이미 제출한 유저인지 확인
     document.addEventListener("DOMContentLoaded", () => {
         if(localStorage.getItem('waylib_survey_done') === 'true') {
             document.getElementById('diagnosisForm').style.display = 'none';
@@ -373,32 +371,26 @@
     document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // 제출 버튼을 '전송 중'으로 바꿔서 중복 클릭 방지
         const submitBtn = document.querySelector('.submit-btn');
         submitBtn.innerText = '데이터 전송 중...';
         submitBtn.disabled = true;
 
         const formData = new FormData(this);
         
-        // 복수선택 체크박스는 구글 시트로 보내기 전에 하나로 합쳐주기
         const houseTypes = formData.getAll('q5_house_type').join(', ');
         const loanTypes = formData.getAll('q15_loan_type').join(', ');
         
         formData.set('q5_house_type', houseTypes);
         formData.set('q15_loan_type', loanTypes);
 
-        // 구글 시트로 데이터 쏘기
         fetch(scriptURL, { method: 'POST', body: formData })
             .then(response => {
-                // 제출 완료 도장 찍기
                 localStorage.setItem('waylib_survey_done', 'true');
 
-                // 폼 숨기고 감사 화면 띄우기
                 document.getElementById('diagnosisForm').style.display = 'none';
                 document.getElementById('headerDesc').style.display = 'none';
                 document.getElementById('thankYouMessage').style.display = 'block';
                 
-                // 화면 맨 위로 스크롤 올려주기
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             })
             .catch(error => {
